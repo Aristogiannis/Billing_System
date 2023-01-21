@@ -1,10 +1,15 @@
 #include<stdio.h>
 #include<time.h>
 #include <stdbool.h>
+#include <stdlib.h>
 
 
-bool option1(){
-printf("");
+void option_add(){
+ FILE *file;
+ file = fopen("D:\\C\\accounts.txt","a");
+ fprintf(file,"YO\n");
+ fclose(file);
+
 }
 
 void homepage(){
@@ -13,6 +18,7 @@ void homepage(){
     
     time_t t;  
     time(&t);
+
     
     printf("%s %s %s \n\n", title,"\t\t\t",ctime(&t));
     printf("1: Add account\n2: Delete account\n3: Search account\n4: Exit\n");
@@ -33,7 +39,7 @@ int main(){
  
  switch (answer){
     case 1:
-    option1();
+    option_add();
     break;
     
     case 2:
@@ -48,16 +54,6 @@ int main(){
     default:
     printf("Non existing option ");
  }
-
- if (!exitcode){
- printf("continue Y/N: ");
- scanf("%s", &stop);
- }
- if (stop == no[0] || stop == no[1]){
-    exitcode =true;
- }
-
-
  }while (!exitcode);
 
  return 0;
