@@ -5,12 +5,11 @@
 
 
 FILE *file;
-const int length = 2000;
 
-/*===============================================*/
 
-void option_search(){
-    char c;
+/*================================================*/
+int numberOflines(){
+   char c;
     int lines = 0;
       file = fopen("D:\\C\\accounts.txt","r");    
     do{
@@ -19,17 +18,27 @@ void option_search(){
         if(c =='\n'){lines++;}
 
     }while (c != EOF);
- fclose(file);
- printf("%d", lines);
+    fclose(file);
+    return lines;
+}
+
+
+
+/*===============================================*/
+
+void option_search(){
+    printf("%d lines", numberOflines());
+
+
 }
 
 /*===============================================*/
 void option_add(){ 
- 
  char fullname[100];
- int due_date = 0;
- double balance = 0;
- 
+ int due_date;
+ float balance;
+ int num = numberOflines();
+
  printf("Name, Surname: ");
  scanf("%s",&fullname);
  printf("Due date (format = XXXXXX): ");
@@ -38,13 +47,13 @@ void option_add(){
  scanf("%f",&balance);
  
  file = fopen("D:\\C\\accounts.txt","a");
- fprintf(file,"%s,%d,%f \n", fullname, due_date, balance);
+ fprintf(file,"%d: %s,%d,%f\n",num, fullname, due_date, balance);
  fclose(file);
 }
 
 /*===============================================*/
 int homepage(){
-    char title[] = "\n\n\t\tBilling System";
+    char title[] = "\n\nBilling System";
     int answer;
     time_t t;  
     time(&t);
@@ -59,27 +68,32 @@ int homepage(){
 /*===============================================*/
 
 int main(){
- 
  bool exitcode = false;
 
  do{ 
  switch (homepage()){
+
     case 1:
     option_add();
+    system("cls");
     break;
-    
+
     case 2:
-    option_search();
+    system("cls");
     break;
     
     case 3:
+    option_search();
+    //system("cls");
     break;
     
     case 4:
     exitcode = true;
     break;
     default:
-    printf("Non existing option ");
+    system("cls");
+    printf("ERROR: Non existing option");
+
  }
  }while (!exitcode);
 
