@@ -1,7 +1,9 @@
+#include <ctype.h>
 #include<stdio.h>
 #include<time.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <string.h>
 
 
 FILE *file;
@@ -9,7 +11,7 @@ FILE *file;
 
 /*================================================*/
 int numberOflines(){
-   char c;
+    char c;
     int lines = 0;
       file = fopen("D:\\C\\accounts.txt","r");    
     do{
@@ -27,9 +29,56 @@ int numberOflines(){
 /*===============================================*/
 
 void option_search(){
-    printf("%d lines", numberOflines());
+    char type[12];
+    char sname[100];
+    int id;
+    int count = 0;
+    bool found = false;
 
+    printf("name / id: ");
+    scanf("%s", &type);
+    if(strcmp(type,"name") == 0){
+        printf("type name: ");
+        scanf("%s", &sname);
+    }
+    else if(strcmp(type, "id") == 0){
+        printf("type id: ");
+        scanf("%d", &id);
+    }
 
+     char c;
+     char store;
+     file = fopen("D:\\C\\accounts.txt","r");    
+     
+     do{
+        c = fgetc(file);
+        if( isdigit(c) ){
+            store = c;
+        }
+        if(c == sname[count]){
+            count++;
+        }
+        else{count = 0;}
+
+        if (count == strlen(sname)){
+        found = true;}
+    }while (!found || c == EOF);
+    fclose(file);
+    file = fopen("D:\\C\\accounts.txt","r");   
+    
+    found = false;
+    
+    while(!found){
+     c = getc(file);
+     if (c == store){
+        do{
+        printf("%c", c);
+        c = getc(file);
+        }while(c != '\n');
+        found = true;
+     }
+    }
+    fclose(file);
 }
 
 /*===============================================*/
@@ -47,7 +96,7 @@ void option_add(){
  scanf("%f",&balance);
  
  file = fopen("D:\\C\\accounts.txt","a");
- fprintf(file,"%d: %s,%d,%f\n",num, fullname, due_date, balance);
+ fprintf(file,"%d,%s,%d,%f\n",num, fullname, due_date, balance);
  fclose(file);
 }
 
@@ -68,8 +117,9 @@ int homepage(){
 /*===============================================*/
 
 int main(){
+ int a[numberOflines()];
  bool exitcode = false;
-
+ 
  do{ 
  switch (homepage()){
 
