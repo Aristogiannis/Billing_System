@@ -4,7 +4,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
-
+#define MAX_LINE_LENGTH 90
 
 FILE *file;
 /*================================================*/
@@ -31,16 +31,13 @@ int numberOflines(){
 /*===============================================*/
 
 int option_search(){
-    char type[12];
+    char type[9 ];
     char sname[100];
     int id;
-    int count = 0;
-    bool found = false;
-    char store;
-    char c;
-    int line = 0;
-    int temp = 0;
-    int n;
+    int store;
+    char line[MAX_LINE_LENGTH] = {0};
+    unsigned int line_num = 0;
+    bool not_found = false;
     file = fopen("D:\\C\\accounts.txt","r");  
 
     printf("name / id: ");
@@ -49,63 +46,35 @@ int option_search(){
     if(strcmp(type,"name") == 0){ //Start of search by name
         printf("type name: ");
         scanf("%s", &sname);
-     do{
-        c = getc(file);
-        if(c == '\n'){
-            line++;
-        }
- 
-        if(c == sname[count]){
-            count++;
-        }
-        else{count = 0;}
-        if (count == strlen(sname)){
-            found = true;
-            }
-
-    }while (!found || c != EOF);
-    fclose(file);
-
-    file = fopen("D:\\C\\accounts.txt","r");
-    n = 0;
-    while(n==0){
-         
-        if (line == 0){
-            n = 1;
-            do{
-                c = getc(file);
-                printf("%c",c);
-            }while(c != '\n' || c != EOF); 
-
-        }
-        else{
-            do{
-                c = getc(file);
-                if(c == '\n'){
-                temp++;}
-
-                if (temp == line){
-                n = 1;
-                
-                    printf("%c",c);
-                    if(c =='\n'){break;}
-                }
-                
-
-            }while (c != EOF);
-             
-            
-        }
-    }
-    
-    fclose(file);
-
 
     } // End of Name search
 
     else if(strcmp(type, "id") == 0){
         printf("type id: ");
         scanf("%d", &id);
+
+        while (fgets(line, MAX_LINE_LENGTH, file))
+    {
+        if (id == 0){
+            printf("%s", line);
+            break;
+        }
+        else if (id == line_num){
+            printf("%s", line);
+            break;
+        }
+        line_num++;
+        
+        /* Add a trailing newline to lines that don't already have one */
+        if (line[strlen(line) - 1] != '\n')
+            printf("\n");
+    }
+    
+    /* Close file */
+    if (fclose(file))
+    {
+        return EXIT_FAILURE;
+    }
     }
 
     return store;
