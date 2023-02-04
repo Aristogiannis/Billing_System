@@ -94,7 +94,7 @@ void option_add(){
  float balance;
  int num = numberOflines();
 
- printf("Name, Surname: ");
+ printf("Name, Surname (format = Name-Surname): ");
  scanf("%s",&fullname);
  printf("Due date (format = XXXXXX): ");
  scanf("%d",&due_date);
@@ -114,7 +114,7 @@ int homepage(){
     time(&t);
 
     printf("%s %s %s \n\n", title,"\t\t\t",ctime(&t));
-    printf("1: Add account\n2: Delete account\n3: Search account\n4: Exit\n");
+    printf("1: Add account\n2: Clear Screan\n3: Search account\n4: Exit\n");
     printf("  (Type from 1 to 4)\n");
     scanf("%d",&answer);
     return answer;
