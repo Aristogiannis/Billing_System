@@ -38,6 +38,7 @@ int option_search(){
     char line[MAX_LINE_LENGTH] = {0};
     unsigned int line_num = 0;
     bool not_found = false;
+    char *pos;
     file = fopen("D:\\C\\accounts.txt","r");  
 
     printf("name / id: ");
@@ -46,10 +47,21 @@ int option_search(){
     if(strcmp(type,"name") == 0){ //Start of search by name
         printf("type name: ");
         scanf("%s", &sname);
+        
+        while(fgets(line, MAX_LINE_LENGTH, file)){
+            pos = strstr(line, sname);
+            if (pos != NULL){
+                printf("%s", line);
+                break;
+            }
+            line_num++;
+        }
+
+        fclose(file);
 
     } // End of Name search
 
-    else if(strcmp(type, "id") == 0){
+    else if(strcmp(type, "id") == 0){ //Start search by id
         printf("type id: ");
         scanf("%d", &id);
 
@@ -65,17 +77,12 @@ int option_search(){
         }
         line_num++;
         
-        /* Add a trailing newline to lines that don't already have one */
+        /* Adds a trailing newline to lines that don't already have one */
         if (line[strlen(line) - 1] != '\n')
             printf("\n");
     }
-    
-    /* Close file */
-    if (fclose(file))
-    {
-        return EXIT_FAILURE;
-    }
-    }
+    if (fclose(file)){return EXIT_FAILURE;}
+}//End search by id
 
     return store;
 }
